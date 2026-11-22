@@ -1,0 +1,17 @@
+{
+  "Group": "xytronix",
+  "Name": "Forgotten Temple",
+  "Version": "1.1.0",
+  "Description": "Converts the Forgotten Temple instance into a persistent shared world.",
+  "Authors": [
+    {
+      "Name": "xytronix"
+    }
+  ],
+  "ServerVersion": ">=0.7.7 <0.8.0",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": true,
+  "Main": "com.xytronix.forgottentemple.ForgottenTempleMod"
+}

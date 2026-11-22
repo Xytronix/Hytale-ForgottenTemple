@@ -1,0 +1,1 @@
+{ "Parent": "ForgottenTemple", "World": { "AllowBlockBreaking": true, "AllowBlockGathering": true, "AllowBlockPlacement": true, "BlockedRootInteractionTags": [ "Type=Bed" ] }, "Combat": { "DisablePlayerIncomingDamage": true } }

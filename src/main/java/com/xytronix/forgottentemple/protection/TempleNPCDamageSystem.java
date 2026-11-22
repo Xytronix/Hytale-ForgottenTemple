@@ -11,7 +11,7 @@ import com.hypixel.hytale.component.system.EntityEventSystem;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.hypixel.hytale.server.npc.entities.NPCEntity;
+import com.hypixel.hytale.server.npc.components.NPCComponent;
 import java.util.Collections;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -59,7 +59,7 @@ public class TempleNPCDamageSystem extends EntityEventSystem<EntityStore, Damage
 
         Ref<EntityStore> victimRef = archetypeChunk.getReferenceTo(index);
 
-        NPCEntity victimNPC = store.getComponent(victimRef, NPCEntity.getComponentType());
+        NPCComponent victimNPC = store.getComponent(victimRef, NPCComponent.getComponentType());
         if (victimNPC == null) {
             return;
         }
@@ -77,7 +77,7 @@ public class TempleNPCDamageSystem extends EntityEventSystem<EntityStore, Damage
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return NPCEntity.getComponentType();
+        return NPCComponent.getComponentType();
     }
 
     @Nonnull

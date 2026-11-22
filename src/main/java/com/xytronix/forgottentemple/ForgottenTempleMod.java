@@ -27,7 +27,7 @@ import com.hypixel.hytale.server.core.universe.world.events.RemoveWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.events.StartWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.universe.world.worldgen.provider.IWorldGenProvider;
-import com.hypixel.hytale.server.npc.entities.NPCEntity;
+import com.hypixel.hytale.server.npc.components.NPCComponent;
 import com.xytronix.forgottentemple.commands.ForgottenTempleCommand;
 import com.xytronix.forgottentemple.interaction.ReturnFromTempleInteraction;
 import com.xytronix.forgottentemple.interaction.TeleportToTempleInteraction;
@@ -478,11 +478,11 @@ public final class ForgottenTempleMod extends JavaPlugin {
 
     private void protectMerchantNpcs(World world) {
         Store<EntityStore> store = world.getEntityStore().getStore();
-        Archetype<EntityStore> npcQuery = Archetype.of(NPCEntity.getComponentType());
+        Archetype<EntityStore> npcQuery = Archetype.of(NPCComponent.getComponentType());
         store.forEachChunk(npcQuery, (chunk, buffer) -> {
             int size = chunk.size();
             for (int i = 0; i < size; i++) {
-                NPCEntity npc = chunk.getComponent(i, NPCEntity.getComponentType());
+                NPCComponent npc = chunk.getComponent(i, NPCComponent.getComponentType());
                 if (npc == null || !isKlopMerchantNpc(npc)) {
                     continue;
                 }
@@ -494,7 +494,7 @@ public final class ForgottenTempleMod extends JavaPlugin {
         });
     }
 
-    private boolean isKlopMerchantNpc(NPCEntity npc) {
+    private boolean isKlopMerchantNpc(NPCComponent npc) {
         String roleName = npc.getRoleName();
         if (containsKlopMerchant(roleName)) {
             return true;

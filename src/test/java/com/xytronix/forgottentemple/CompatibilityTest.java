@@ -13,18 +13,16 @@ import org.junit.jupiter.api.Test;
 
 class CompatibilityTest {
     @Test
-    void packagedManifestTargetsHytale07FromPatch7AndMatchesProjectVersion() throws Exception {
+    void packagedManifestTargetsHytale080Pre6AndMatchesProjectVersion() throws Exception {
         try (var stream = getClass().getResourceAsStream("/manifest.json")) {
             assertNotNull(stream);
             var manifest = JsonParser.parseReader(new InputStreamReader(stream, StandardCharsets.UTF_8))
                     .getAsJsonObject();
-            assertEquals(">=0.7.7 <0.8.0", manifest.get("ServerVersion").getAsString());
+            assertEquals(">=0.8.0-pre.6", manifest.get("ServerVersion").getAsString());
             var range = SemverRange.fromString(manifest.get("ServerVersion").getAsString());
-            assertTrue(range.satisfies(Semver.fromString("0.7.7")));
-            assertTrue(range.satisfies(Semver.fromString("0.7.8")));
-            assertFalse(range.satisfies(Semver.fromString("0.7.6")));
-            assertFalse(range.satisfies(Semver.fromString("0.8.0-pre.6")));
-            assertFalse(range.satisfies(Semver.fromString("0.8.0")));
+            assertTrue(range.satisfies(Semver.fromString("0.8.0-pre.6")));
+            assertFalse(range.satisfies(Semver.fromString("0.8.0-pre.5")));
+            assertFalse(range.satisfies(Semver.fromString("0.7.7")));
             assertEquals(
                     System.getProperty("project.version"),
                     manifest.get("Version").getAsString());

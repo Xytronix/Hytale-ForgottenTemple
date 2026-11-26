@@ -4,9 +4,9 @@ Hytale server mod that turns the Forgotten Temple instance into a persistent, sh
 
 ## Install
 
-Requires Hytale Server 0.8.0-pre.6 or newer. For Hytale 0.7 use the `main` branch.
+Requires Hytale Server 0.8.0-pre.7 or newer. For Hytale 0.7 use the `main` branch.
 
-Put `Hytale-ForgottenTemple-1.1.0-beta.1.jar` in the server's `mods` folder. To build it yourself, run `mvn clean verify` (JDK 25, Maven 3.9+).
+Put `Hytale-ForgottenTemple-1.1.1-beta.1.jar` in the server's `mods` folder. To build it yourself, run `mvn clean verify` (JDK 25, Maven 3.9+).
 
 ## Temple layout
 

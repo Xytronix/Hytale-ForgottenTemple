@@ -8,9 +8,7 @@ import com.hypixel.hytale.server.core.universe.world.worldgen.GeneratedBlockChun
 import com.hypixel.hytale.server.core.universe.world.worldgen.GeneratedChunk;
 import com.hypixel.hytale.server.core.universe.world.worldgen.IWorldGen;
 import com.hypixel.hytale.server.core.universe.world.worldgen.WorldGenTimingsCollector;
-import it.unimi.dsi.fastutil.longs.Long2FloatFunction;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.LongPredicate;
+import com.hypixel.hytale.server.core.work.WorkItem;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -33,21 +31,11 @@ public class ForgottenTempleWorldGen implements IWorldGen {
 
     @Override
     @Nonnull
-    public CompletableFuture<GeneratedChunk> generate(
-            int seed,
-            long index,
-            int chunkX,
-            int chunkZ,
-            @Nullable LongPredicate stillNeeded,
-            @Nullable Long2FloatFunction priority) {
-        return CompletableFuture.supplyAsync(() -> generateChunk(stillNeeded, index, chunkX, chunkZ));
+    public WorkItem<GeneratedChunk> generate(int seed, long index, int chunkX, int chunkZ) {
+        return WorkItem.completed(generateChunk(index, chunkX, chunkZ));
     }
 
-    private GeneratedChunk generateChunk(LongPredicate stillNeeded, long index, int chunkX, int chunkZ) {
-        if (stillNeeded != null && !stillNeeded.test(index)) {
-            return null;
-        }
-
+    private GeneratedChunk generateChunk(long index, int chunkX, int chunkZ) {
         GeneratedChunk chunk = new GeneratedChunk();
         GeneratedBlockChunk blockChunk = chunk.getBlockChunk();
         blockChunk.setCoordinates(index, chunkX, chunkZ);

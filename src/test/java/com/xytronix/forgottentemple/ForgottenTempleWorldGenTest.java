@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.universe.world.worldgen.GeneratedBlockChunk;
+import com.hypixel.hytale.server.core.work.WorkPool;
 import com.xytronix.forgottentemple.worldgen.ForgottenTempleWorldGen;
 import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
@@ -40,15 +41,16 @@ class ForgottenTempleWorldGenTest {
     }
 
     private GeneratedBlockChunk generate(int x, int z) throws Exception {
-        return generator
-                .generate(42, ChunkUtil.indexChunk(x, z), x, z, null, index -> 1.0f)
-                .get(5, TimeUnit.SECONDS)
-                .getBlockChunk();
-    }
-
-    @Test
-    void cancelledGenerationDoesNotCreateAChunk() throws Exception {
-        assertNull(generator.generate(42, 0, 0, 0, index -> false, null).get(5, TimeUnit.SECONDS));
+        var pool = new WorkPool(1);
+        try {
+            return pool.getChunksBucket()
+                    .newScope("ForgottenTempleWorldGenTest")
+                    .submit(generator.generate(42, ChunkUtil.indexChunk(x, z), x, z))
+                    .get(5, TimeUnit.SECONDS)
+                    .getBlockChunk();
+        } finally {
+            pool.shutdownNow();
+        }
     }
 
     @Test
